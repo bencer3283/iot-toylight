@@ -27,7 +27,7 @@ app.post('/', (req, res) => {
         res.send(true)
       }
       else res.send(false)
-    }s
+    }
 })
 
 
