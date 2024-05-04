@@ -47,13 +47,14 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(ledPin, LOW);
+  bool button = false;
+  bool remote = false;
   // wait for WiFi connection
   if ((WiFiMulti.run() == WL_CONNECTED)) {
-    bool button = false;
+    
     if(digitalRead(buttonPin) == HIGH){
       button = true;
-      digitalWrite(ledPin, HIGH);
+      //digitalWrite(ledPin, HIGH);
     } else {
       button = false;
     }
@@ -87,8 +88,12 @@ void loop() {
           Serial.println(payload);
           if (payload == "true") {
             Serial.println("light up");
-                                   // waits 15ms for the servo to reach the position
+            remote = true;
+            //digitalWrite(ledPin, HIGH);                       // waits 15ms for the servo to reach the position
             }
+          }
+          else{
+            //digitalWrite(ledPin, LOW);
           }
         
       } else {
@@ -100,7 +105,12 @@ void loop() {
       Serial.printf("[HTTPS] Unable to connect\n");
     }
   }
-
+  if(button || remote){
+    digitalWrite(ledPin, HIGH);
+  }
+  else{
+    digitalWrite(ledPin, LOW);
+  }
   Serial.println("Wait 30ms before next round...");
   delay(30);
 }
